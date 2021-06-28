@@ -1,6 +1,25 @@
 # -*- coding:utf-8 -*-
+"""
+该脚本为客户端脚本
+
+作用：
+    将数据信息发送给服务端
+
+参数：
+    Client(HOST,PORT,BUFFER,timeout=0.55)
+    其中：
+        HOST,PORT,BUFFER为服务脚本所开ip,端口与缓存大小，其中ip与端口要与服务脚本一致
+        timeout为客户端请求结束持续时间总长度,单位s.如果从服务器传回来的数据量较大，或者网速较慢可以适当加大该值。
 
 
+例：
+    >>> from cgai_socket.cgai_client import Client
+    >>>
+    >>> my_client = Client('192.168.1.88',24601,1024)
+    >>> msg = {'a':1,'b':2,'c':3}
+    >>> my_client.send(msg)
+
+"""
 import socket
 
 

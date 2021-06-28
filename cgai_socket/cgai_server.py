@@ -24,7 +24,7 @@
 
 使用add_callback添加回调函数：
     添加回调函数时可以传入参数，但是不需要传入data。比如
-    >>> from cgai_socket import Server
+    >>> from cgai_socket.cgai_server import Server
     >>>
     >>> def myfunc(data,_id,_name):
     >>>     print(data.get('a',''))
@@ -69,7 +69,6 @@ class Server(object):
     def __init__(self,HOST,PORT,BUFFER,call_backs={}):
         super(Server, self).__init__()
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # self.server.settimeout(0.95)
         self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.server.bind((HOST, PORT))
         self.server.listen(150)
@@ -77,11 +76,11 @@ class Server(object):
 
         self.__call_backs = call_backs
 
-    def add_callback(self,func_name,args):
+    def add_callback(self,func_name,args=None):
         """
         添加回调函数
-        :param func_name: 
-        :param args: tuple
+        :param func_name: 函数名称
+        :param args: 函数参数，tuple类型，没有则无需输入
         :return: 
         """
         self.__call_backs[func_name] = args
@@ -89,7 +88,7 @@ class Server(object):
     def delete_callback(self,func_name):
         """
         删除回调函数
-        :param func_name:
+        :param func_name: 函数名称
         :return:
         """
         self.__call_backs.pop(func_name)
@@ -106,7 +105,10 @@ class Server(object):
         return msg
 
     def listening(self):
-
+        """
+        开启服务监听
+        :return:
+        """
         if self.__call_backs:
             print('listening')
             while True:
