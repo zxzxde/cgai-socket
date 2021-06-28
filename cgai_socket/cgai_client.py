@@ -50,7 +50,9 @@ class Client(object):
                 all_backs += back
 
         except Exception as request_from_222_ERR:
-            print(str(request_from_222_ERR))
+            if str(request_from_222_ERR) != 'timed out':
+                print(str(request_from_222_ERR))
+
         finally:
             data = eval(all_backs.decode('utf8'))
             result = data.get('back',None)

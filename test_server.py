@@ -15,11 +15,13 @@ def func3(data,_id2,_name2):
     print('func2:',_id2,_name2)
     return 'func2'
 
-HOST = '192.168.53.3'
+# HOST = '192.168.53.3'
+HOST = '192.168.2.100'
 PORT = 24601
 BUFFER = 20480
 
-call_backs = {func1:None,func2:(1,'CGAI01'),func3:(2,'CGAI02')}
+# call_backs = {func1:None,func2:(1,'CGAI01'),func3:(2,'CGAI02')}
+call_backs = {func1:None}
 
 server = Server(HOST,PORT,BUFFER,call_backs=call_backs)
 server.listening()

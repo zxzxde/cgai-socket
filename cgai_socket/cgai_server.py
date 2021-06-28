@@ -123,14 +123,11 @@ class Server(object):
                         for func,args in self.__call_backs.items():
                             try:
                                 result = func(data,*args) if args else func(data)
-                                if result:
-                                    # print('result:',result)
-                                    back = {'back':result}
-                                    client_sock.sendall(str(back).encode("utf8"))
+                                back = {'back':result}
+                                client_sock.sendall(str(back).encode("utf8"))
 
                             except Exception as func_ERR:
                                 print(f'{func.__name__}  执行失败',str(func_ERR))
-                        print('back')
 
                 except Exception as listening_ERR:
                     print('listening_ERR:', str(listening_ERR))
