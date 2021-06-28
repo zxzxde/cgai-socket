@@ -41,7 +41,8 @@ class Client(object):
         result = None
         try:
             self.client.connect((self.HOST, self.PORT))
-            self.client.send(str(msg).encode('utf8'))
+            data = {'msg':msg}
+            self.client.send(str(data).encode('utf8'))
             all_backs = b''
             while True:
                 back = self.client.recv(self.BUFFER)
