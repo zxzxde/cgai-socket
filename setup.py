@@ -9,7 +9,7 @@ setuptools.setup(
     name="cgai_socket",
     version="0.0.1",
     author="Master Zhang",
-    author_email="36014296@qq..com",
+    author_email="360014296@qq.com",
     description="A simple and fast library supporting custom callback function.",
     long_description=long_description,
     long_description_content_type="text/markdown",
