@@ -91,6 +91,7 @@ print('result:',result)
     >>> def myfunc(data,_id,_name):
     >>>     print(data.get('a',''))
     >>>     print(_id,_name)
+    >>>     return None
     >>>
     >>> my_server = Server('192.168.1.88',24601,1024)
     >>> my_id = 12
