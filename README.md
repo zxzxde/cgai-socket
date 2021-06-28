@@ -3,7 +3,10 @@
 #### 介绍
 简单轻量又快速的socket服务与客户请求库，支持绑定自定义函数
 
-
+#### 安装
+```cmd
+pip install cgai-socket
+```
 
 #### 使用说明
 
@@ -79,9 +82,10 @@ print('result:',result)
 
 #### 添加回调函数
 
-使用add_callback添加回调函数：
+1.使用add_callback添加回调函数：
 
-    使用add_callback添加回调函数时可以传入参数，但是不需要传入data。比如
+    使用add_callback添加回调函数时可以传入参数，但是不需要传入data。因为data是客户端传来的数据，
+    这里只是当中占位参数。例：
     >>> from cgai_socket.cgai_server import Server
     >>>
     >>> def myfunc(data,_id,_name):
@@ -102,12 +106,12 @@ print('result:',result)
     >>> my_server.add_callback(func2)
     >>> ...
 
-注意：只有当所有回调函数添加完成后，最后执行listening
+注意：只有当所有回调函数添加完成后，最后执行listening开启服务。
 
 
 初始化创建server时添加多个回调函数:  
 
-    在初始化server时，是可以直接一次性添加多个回调函数的，使用关键字参数 call_backs,
+    在初始化server时，是可以直接一次性添加多个回调函数，使用关键字参数 call_backs,
     call_backs是一个字典，它使用结构是:
     >>> {func1_name:(func1_args),func2_name:(func2_args),...}
 
