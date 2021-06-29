@@ -128,7 +128,7 @@ class Server(object):
                                 client_sock.sendall(str(back).encode("utf8"))
 
                             except Exception as func_ERR:
-                                print(f'{func.__name__}  执行失败',str(func_ERR))
+                                print('{}  执行失败'.format(func.__name__),str(func_ERR))
 
                 except Exception as listening_ERR:
                     print('listening_ERR:', str(listening_ERR))
