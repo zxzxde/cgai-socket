@@ -7,7 +7,7 @@ with open(os.path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setuptools.setup(
     name="cgai_socket",
-    version="0.0.4",
+    version="0.0.5",
     author="Master Zhang",
     author_email="360014296@qq.com",
     description="A simple and fast library supporting custom callback function.",
@@ -18,10 +18,15 @@ setuptools.setup(
     classifiers=[
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 2.8",
+        "Programming Language :: Python :: 2.9",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3 :: Only"
+        "Programming Language :: Python :: 3.8"
+        "Programming Language :: Python :: 3.9"
     ],
 )

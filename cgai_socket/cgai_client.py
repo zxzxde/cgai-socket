@@ -39,6 +39,7 @@ class Client(object):
         :return:
         """
         result = None
+        all_backs = b''
         try:
             self.client.connect((self.HOST, self.PORT))
             data = {'msg':msg}
@@ -55,7 +56,7 @@ class Client(object):
                 print(str(request_from_222_ERR))
 
         finally:
-            data = eval(all_backs.decode('utf8'))
+            data = eval(all_backs.decode('utf8')) if all_backs else {}
             result = data.get('back',None)
 
             self.client.close()
