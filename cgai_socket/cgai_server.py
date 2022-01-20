@@ -63,7 +63,7 @@
 import os
 import time
 import socket
-
+import json
 
 class Server(object):
     def __init__(self,HOST,PORT,BUFFER,call_backs={}):
@@ -119,7 +119,8 @@ class Server(object):
                     if msg:
                         if (len(msg)>self.BUFFER):
                             print('客户端传送数据大于BUFFER长度')
-                        msg = eval(msg.decode('utf8'))
+                        # msg = eval(msg.decode('utf8'))
+                        msg = json.loads(msg.decode('utf8'))
                         data = msg.get('msg')
                         for func,args in self.__call_backs.items():
                             try:
