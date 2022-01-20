@@ -43,7 +43,6 @@ class Client(object):
         try:
             self.client.connect((self.HOST, self.PORT))
             data = {'msg':msg}
-            # self.client.send(str(data).encode('utf8'))
             self.client.send(json.dumps(data).encode('utf8'))
             all_backs = b''
             while True:
