@@ -5,7 +5,7 @@ from cgai_socket.cgai_server import Server
 
 def func1(data):
     print('func1',data)
-    return None
+    return '你是对的'
 
 def func2(data,_id,_name):
     print('func2:',_id,_name)
