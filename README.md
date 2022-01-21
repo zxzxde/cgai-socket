@@ -124,6 +124,46 @@ print('result:',result)
     >>> my_server = Server('192.168.1.88',24601,1024,call_backs=call_backs)
 
 
+#### 后台运行server
+    cgai-socket 支持使用threading模块实现后台运行服务
+```python
+import threading
+import time
+from cgai_socket.cgai_server import Server
+
+def func1(data):
+    print('func1',data)
+    return '收到'
+
+
+HOST = '192.168.53.3'
+PORT = 24602
+BUFFER = 20480
+
+call_backs = {func1:None}
+
+
+def init_server():
+    server = Server(HOST,PORT,BUFFER,call_backs=call_backs)
+    server.listening()
+
+
+if __name__ == '__main__':
+    start_time = time.time()
+    t = threading.Thread(None, init_server)
+    t.setDaemon(True)
+    t.start()
+    while True:
+        end_time = time.time()
+        if end_time - start_time > 10:
+            print('停止主程序')
+            break
+```
+
+
+
+
+
 #### 交流方式
 
 

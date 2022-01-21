@@ -64,6 +64,7 @@ import os
 import time
 import socket
 import json
+import base64
 
 class Server(object):
     def __init__(self,HOST,PORT,BUFFER,call_backs={}):
@@ -95,14 +96,20 @@ class Server(object):
 
     def _get_recv(self,client):
         msg = b''
-        msg = client.recv(self.BUFFER)
         while True:
             rec = client.recv(self.BUFFER)
-            if not rec:
-                print('没了没了')
+            if len(rec) > 0:
+                if rec[-5:] == b'#cgai':
+                    msg += rec[:-5]
+                    break
+                else:
+                    msg += rec
+            else:
                 break
-            msg += rec
-        return msg
+        msg = base64.b64decode(msg)
+        msg = json.loads(msg.decode('utf8'))
+        data = msg.get('msg')
+        return data
 
     def listening(self):
         """
@@ -115,20 +122,15 @@ class Server(object):
                 time.sleep(0.3)
                 try:
                     client_sock, client_addr = self.server.accept()
-                    msg = client_sock.recv(self.BUFFER)
-                    if msg:
-                        if (len(msg)>self.BUFFER):
-                            print('客户端传送数据大于BUFFER长度')
-                        msg = json.loads(msg.decode('utf8'))
-                        data = msg.get('msg')
-                        for func,args in self.__call_backs.items():
-                            try:
-                                result = func(data,*args) if args else func(data)
-                                back = {'back':result}
-                                client_sock.sendall(str(back).encode("utf8"))
-
-                            except Exception as func_ERR:
-                                print('{}  执行失败'.format(func.__name__),str(func_ERR))
+                    data = self._get_recv(client_sock)
+                    for func,args in self.__call_backs.items():
+                        try:
+                            result = func(data,*args) if args else func(data)
+                            back = {'back':result}
+                            # print('result:',result)
+                            client_sock.sendall(base64.b64encode(json.dumps(back).encode('utf8'))+b'#cgai')
+                        except Exception as func_ERR:
+                            print('{}  执行失败'.format(func.__name__),str(func_ERR))
 
                 except Exception as listening_ERR:
                     print('listening_ERR:', str(listening_ERR))

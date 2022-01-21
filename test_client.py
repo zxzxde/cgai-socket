@@ -2,7 +2,8 @@
 from cgai_socket.cgai_client import Client
 
 HOST = '127.0.0.1'
-PORT = 24601
+# PORT = 24601
+PORT = 8089
 BUFFER = 20480
 
 my_client = Client(HOST,PORT,BUFFER)
