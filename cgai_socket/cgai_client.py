@@ -20,8 +20,10 @@
     >>> my_client.send(msg)
 
 """
+from http import client
 import socket
 import json
+import base64
 
 class Client(object):
     def __init__(self,HOST,PORT,BUFFER,timeout=0.55):
@@ -43,20 +45,24 @@ class Client(object):
         try:
             self.client.connect((self.HOST, self.PORT))
             data = {'msg':msg}
-            self.client.send(json.dumps(data).encode('utf8'))
-            all_backs = b''
+            self.client.sendall(base64.b64encode(json.dumps(data).encode('utf8')) + b'#cgai')
             while True:
                 back = self.client.recv(self.BUFFER)
-                if not back:
+                if len(back)>0:
+                    if back[-5:] ==b'#cgai':
+                        all_backs += back[:-5]
+                        break
+                    else:
+                        all_backs += back
+                else:
                     break
-                all_backs += back
-
         except Exception as request_from_222_ERR:
             if str(request_from_222_ERR) != 'timed out':
                 print(str(request_from_222_ERR))
 
         finally:
-            data = eval(all_backs.decode('utf8')) if all_backs else {}
+            all_backs = base64.b64decode(all_backs).decode('utf8')
+            data = json.loads(all_backs) if all_backs else {}
             result = data.get('back',None)
 
             self.client.close()
