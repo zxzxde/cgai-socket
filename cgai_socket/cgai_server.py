@@ -131,8 +131,9 @@ class Server(object):
                             client_sock.sendall(base64.b64encode(json.dumps(back).encode('utf8'))+b'#cgai')
                         except Exception as func_ERR:
                             print('{}  执行失败'.format(func.__name__),str(func_ERR))
-
                 except Exception as listening_ERR:
                     print('listening_ERR:', str(listening_ERR))
+                finally:
+                    client_sock.close()
         else:
             print('请先添加回调函数,以对客户端传来的信息进行处理')
