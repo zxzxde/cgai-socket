@@ -24,4 +24,8 @@ BUFFER = 1024
 call_backs = {func1:None}
 
 server = Server(HOST,PORT,BUFFER,call_backs=call_backs)
-server.listening()
+server.listening(True)
+server.listening(True)
+server.listening(True)
+import time 
+time.sleep(1000)
