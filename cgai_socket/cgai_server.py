@@ -65,6 +65,23 @@ import time
 import socket
 import json
 import base64
+import threading 
+
+
+
+class ServerThread(threading.Thread):
+
+    def __init__(self,*args, **kwargs):
+        super(ServerThread,self).__init__(*args, **kwargs)
+
+        self._stop_event = threading.Event()
+
+    def stop(self):
+        self._stop_event.set()
+
+    def stopped(self):
+        return self._stop_event.is_set()
+
 
 class Server(object):
     def __init__(self,HOST,PORT,BUFFER,call_backs={}):
@@ -76,6 +93,7 @@ class Server(object):
         self.BUFFER = BUFFER
 
         self.__call_backs = call_backs
+        self.__thread = None
 
     def add_callback(self,func_name,args=None):
         """
@@ -111,7 +129,7 @@ class Server(object):
         data = msg.get('msg')
         return data
 
-    def listening(self):
+    def __listening(self):
         """
         开启服务监听
         :return:
@@ -137,3 +155,21 @@ class Server(object):
                     client_sock.close()
         else:
             print('请先添加回调函数,以对客户端传来的信息进行处理')
+
+    def listening(self,deamon=False):
+        """
+        开启服务监听
+        :return:
+        """
+        if deamon:
+            if self.__thread:
+                self.__thread.stop()
+
+            else:
+                self.__thread = ServerThread(target=self.__listening)
+                self.__thread.setDaemon(True)
+                self.__thread.start()
+        else:
+            self.__listening()
+    
+
